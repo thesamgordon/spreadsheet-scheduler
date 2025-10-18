@@ -1,13 +1,14 @@
-import json
+import ast
 import os
 from googleapiclient.discovery import build
 from google.oauth2.service_account import Credentials
+import ast
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 SHEET_ID = os.environ['SHEET_ID']
 RANGE = os.environ['SHEET_RANGE']
 
-service_account_info = json.loads(os.environ['GOOGLE_SERVICE_ACCOUNT'])
+service_account_info = ast.literal_eval(os.environ['GOOGLE_SERVICE_ACCOUNT'])
 
 creds = Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
 

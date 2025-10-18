@@ -12,15 +12,21 @@ calendar_service = build('calendar', 'v3', credentials=calendar_creds)
 EVENT_PREFIX = os.environ.get('EVENT_PREFIX', '')
 
 def add_event(event):
+    print("Adding event:", event['summary'])
+    
     calendar_id = os.environ['CALENDAR_ID']
     created_event = calendar_service.events().insert(calendarId=calendar_id, body=event).execute()
     return created_event
 
 def update_event(event_id, event):
+    print("Updating event:", event['summary'])
+    
     calendar_id = os.environ['CALENDAR_ID']
     calendar_service.events().update(calendarId=calendar_id, eventId=event_id, body=event).execute()
 
 def delete_event(event_id):
+    print("Deleting event:", event_id)
+    
     calendar_id = os.environ['CALENDAR_ID']
     calendar_service.events().delete(calendarId=calendar_id, eventId=event_id).execute()
 

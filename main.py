@@ -12,6 +12,8 @@ def main():
         events = fetch_schedule()
         sync_calendar_natural_key(events)
         
+        print("Sync complete. Waiting for the next cycle...")
+        
         time.sleep(60)
 
 if __name__ == "__main__":
