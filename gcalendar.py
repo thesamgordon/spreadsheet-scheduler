@@ -10,6 +10,7 @@ calendar_creds = Credentials.from_service_account_info(service_account_info, sco
 calendar_service = build('calendar', 'v3', credentials=calendar_creds)
 
 EVENT_PREFIX = os.environ.get('EVENT_PREFIX', '')
+LOCATION = os.environ.get('LOCATION', '')
 
 def add_event(event):
     print("Adding event:", event['summary'])
@@ -122,6 +123,7 @@ def convert_entries_to_calendar_events(entries, timezone='America/New_York'):
             'description': description,
             'start': {'dateTime': start_iso, 'timeZone': timezone},
             'end': {'dateTime': end_iso, 'timeZone': timezone},
+            'location': LOCATION
         }
         calendar_events.append(event)
 
