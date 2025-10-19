@@ -2,8 +2,11 @@ from sheet import fetch_schedule
 from gcalendar import sync_calendar_natural_key
 from dotenv import load_dotenv
 import time
+import os
 
 load_dotenv()
+
+wait_time_seconds = os.environ.get('CYCLE_TIME', 60)
 
 def main():
     while True:
@@ -14,7 +17,7 @@ def main():
         
         print("Sync complete. Waiting for the next cycle...")
         
-        time.sleep(60)
+        time.sleep(int(wait_time_seconds))
 
 if __name__ == "__main__":
     main()
