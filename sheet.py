@@ -27,6 +27,27 @@ def fetch_schedule():
 
         start_time = row[1].split('-')[0].strip()
         end_time = row[1].split('-')[1].strip() if '-' in row[1] else ''
+        
+        if start_time.endswith('AM'):
+            start_time = start_time[:-2].strip()
+        if end_time.endswith('AM'):
+            end_time = end_time[:-2].strip()
+            
+        if start_time.endswith('PM'):
+            start_time = start_time[:-2].strip()
+            
+            if not start_time.startswith('12:'):
+                hour, minute = map(int, start_time.split(':'))
+                hour = (hour % 12) + 12
+                start_time = f"{hour}:{minute:02d}"
+                
+        if end_time.endswith('PM'):
+            end_time = end_time[:-2].strip()
+            if not end_time.startswith('12:'):
+                
+                hour, minute = map(int, end_time.split(':'))
+                hour = (hour % 12) + 12
+                end_time = f"{hour}:{minute:02d}"
 
         entry = {
             'date': row[0],
