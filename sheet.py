@@ -14,11 +14,13 @@ creds = Credentials.from_service_account_info(service_account_info, scopes=SCOPE
 
 service = build('sheets', 'v4', credentials=creds)
 
-sheet = service.spreadsheets()
-result = sheet.values().get(spreadsheetId=SHEET_ID, range=RANGE).execute()
-rows = result.get('values', [])
+
 
 def fetch_schedule():
+    sheet = service.spreadsheets()
+    result = sheet.values().get(spreadsheetId=SHEET_ID, range=RANGE).execute()
+    rows = result.get('values', [])
+    
     schedule = []
     
     for row in rows:
