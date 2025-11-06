@@ -18,7 +18,13 @@ service = build('sheets', 'v4', credentials=creds)
 
 def fetch_schedule():
     sheet = service.spreadsheets()
-    result = sheet.values().get(spreadsheetId=SHEET_ID, range=RANGE).execute()
+    
+    try: 
+        result = sheet.values().get(spreadsheetId=SHEET_ID, range=RANGE).execute()
+    except Exception as e:
+        print(f"Error fetching data from Google Sheets: {e}")
+        return []
+    
     rows = result.get('values', [])
     
     schedule = []
