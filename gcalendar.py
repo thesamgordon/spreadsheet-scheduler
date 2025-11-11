@@ -56,7 +56,11 @@ def generate_natural_key(event):
 def sync_calendar_natural_key(sheet_events):
     sheet_events = convert_entries_to_calendar_events(sheet_events)
     existing_events = get_all_events()
-    existing_map = {generate_natural_key(e): e for e in existing_events}
+    try: 
+        existing_map = {generate_natural_key(e): e for e in existing_events}
+    except KeyError as e:
+        print(f"Error generating natural key for existing events: {e}")
+        existing_map = {}
 
     sheet_keys = set()
     
