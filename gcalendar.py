@@ -44,6 +44,7 @@ def generate_natural_key(event):
     if '+' in start:
         start = start.split('+')[0]
     elif '-' in start[10:]:
+        print(start)
         start = start[:19]
         
     if '+' in end:
@@ -56,11 +57,15 @@ def generate_natural_key(event):
 def sync_calendar_natural_key(sheet_events):
     sheet_events = convert_entries_to_calendar_events(sheet_events)
     existing_events = get_all_events()
-    try: 
-        existing_map = {generate_natural_key(e): e for e in existing_events}
-    except KeyError as e:
-        print(f"Error generating natural key for existing events: {e}")
-        existing_map = {}
+    existing_map = {}
+    
+    for e in existing_events:
+        try:
+            existing_map[generate_natural_key(e)] = e
+        except KeyError:
+            print(f"Error generating natural key for event: {e}")
+            delete_event(e['id'])
+            continue
 
     sheet_keys = set()
     
@@ -72,7 +77,6 @@ def sync_calendar_natural_key(sheet_events):
             calendar_event = existing_map[key]
             update_event(calendar_event['id'], event)
         else:
-
             add_event(event)
 
     for key, event in existing_map.items():
@@ -81,7 +85,11 @@ def sync_calendar_natural_key(sheet_events):
     
     seen_keys = set()
     for event in existing_events:
-        key = generate_natural_key(event)
+        try:
+            key = generate_natural_key(event)
+        except KeyError:
+            continue
+        
         if key in seen_keys:
             delete_event(event['id'])
         else:
