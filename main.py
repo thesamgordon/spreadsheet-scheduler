@@ -12,11 +12,14 @@ def main():
     while True:
         print("Fetching schedule from Google Sheets...")
         
-        events = fetch_schedule()
-        sync_calendar_natural_key(events)
-        
-        print("Sync complete. Waiting for the next cycle...")
-        
+        try:
+            events = fetch_schedule()
+            sync_calendar_natural_key(events)
+
+            print("Sync complete. Waiting for the next cycle...")
+        except Exception as e:
+            print(f"Error occurred: {e}")
+
         time.sleep(int(wait_time_seconds))
 
 if __name__ == "__main__":
