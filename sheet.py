@@ -63,7 +63,7 @@ def fetch_schedule():
             'end_time': end_time,
             'schedule': row[2],
             'activity': row[3],
-            'new_element': row[4] if len(row) > 4 else None
+            'notes': row[4] if len(row) > 4 else None
         }
         schedule.append(entry)
         

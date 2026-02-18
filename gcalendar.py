@@ -122,8 +122,8 @@ def convert_entries_to_calendar_events(entries, timezone='America/New_York'):
             activity = EVENT_PREFIX + activity
 
         description = ''
-        if entry.get('new_element'):
-            description = "<strong>New Element:</strong> " + entry.get('new_element', '')
+        if entry.get('notes'):
+            description = "<strong>Notes:</strong> " + entry.get('notes', '')
             if entry.get('schedule'):
                 description = str(description) + f"\n\n<strong>Schedule:</strong>\n{entry['schedule']}"
         else:
